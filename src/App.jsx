@@ -16,9 +16,9 @@ const DATA = {
   venueMap: "https://maps.app.goo.gl/ZoGTEavibPR3RgHj6?g_st=aw",
   family: [
     { title: "Mis abuelos", names: ["Leoncio Becerril Razo", "Julia Martínez Marín"] },
-    { title: "Mi madre", names: ["Fabiola Joseline Becerril Martínez"] },
     { title: "Mis padrinos de vestido", names: ["Carlos Manuel Martínez Marín", "Orfelina May Chan"] },
-    { title: "Mis padrinos de misa", names: ["Fermín Pérez Pinto", "Violeta Martínez Marín"] }
+    { title: "Mis padrinos de misa", names: ["Fermín Pérez Pinto", "Violeta Martínez Marín"] },
+    { title: "Mi madre", names: ["Fabiola Joseline Becerril Martínez"] }
   ],
   photos: Array.from({ length: 8 }, (_, index) => `/foto-${index + 1}.jpg`),
   music: "/musica-xv.mp3"
@@ -108,7 +108,7 @@ export default function App() {
 
     <Quote>En compañía de las personas que amo, celebraré el comienzo de una nueva etapa.</Quote>
 
-    <section><h2>Me acompañan</h2><div className="family-list">{DATA.family.map((group, index) => <FamilyCard key={group.title} {...group} delay={index * 0.12} />)}</div></section>
+    <section><h2>Mis abuelos y padrinos</h2><div className="family-list">{DATA.family.map((group, index) => <FamilyCard key={group.title} {...group} delay={index * 0.12} />)}</div></section>
 
     <Quote>El tiempo avanza y cada día falta menos para vivir una noche inolvidable.</Quote>
 
