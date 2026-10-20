@@ -2,7 +2,7 @@
 
 Versión actualizada:
 - Todo el texto está en cursiva.
-- Orden de acompañantes: abuelos, madre, padrinos de vestido y padrinos de misa.
+- Sección “Mis abuelos y padrinos”: abuelos, padrinos de vestido, padrinos de misa y, al final, mi madre.
 - Carrusel preparado para 8 fotografías.
 - Sin confirmación por WhatsApp.
 
@@ -16,3 +16,7 @@ Para probar:
 npm install
 npm run dev
 ```
+
+Todos los usos del nombre se normalizaron como Joseline/JOSELINE y el diseño conserva la tipografía cursiva.
+
+La sección “Me acompañan” utiliza dos cuadros: uno conjunto para abuelos y padrinos, y otro independiente para la madre.

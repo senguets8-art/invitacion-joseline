@@ -14,12 +14,12 @@ const DATA = {
   venue: "Local del Sindicato de Taxistas",
   venueAddress: "Av. Francisco I. Madero, SM 92, calle 71",
   venueMap: "https://maps.app.goo.gl/ZoGTEavibPR3RgHj6?g_st=aw",
-  family: [
+  familyGroups: [
     { title: "Mis abuelos", names: ["Leoncio Becerril Razo", "Julia Martínez Marín"] },
     { title: "Mis padrinos de vestido", names: ["Carlos Manuel Martínez Marín", "Orfelina May Chan"] },
-    { title: "Mis padrinos de misa", names: ["Fermín Pérez Pinto", "Violeta Martínez Marín"] },
-    { title: "Mi madre", names: ["Fabiola Joseline Becerril Martínez"] }
+    { title: "Mis padrinos de misa", names: ["Fermín Pérez Pinto", "Violeta Martínez Marín"] }
   ],
+  mother: ["Fabiola Joseline Becerril Martínez"],
   photos: Array.from({ length: 8 }, (_, index) => `/foto-${index + 1}.jpg`),
   music: "/musica-xv.mp3"
 };
@@ -55,8 +55,16 @@ function ImageWithFallback({ src, alt }) {
   return error ? <div className="placeholder"><Sparkles /><p>Agrega {src.replace("/", "")} en la carpeta public</p></div> : <img src={src} alt={alt} onError={() => setError(true)} />;
 }
 
-function FamilyCard({ title, names, delay }) {
-  return <Reveal delay={delay}><article className="card family-card"><Users /><h3>{title}</h3><Divider />{names.map(name => <p key={name}>{name}</p>)}</article></Reveal>;
+function FamilyGroup({ title, names }) {
+  return <div className="family-group"><h3>{title}</h3>{names.map(name => <p key={name}>{name}</p>)}</div>;
+}
+
+function FamilyAndGodparentsCard() {
+  return <Reveal><article className="card family-card combined-family-card"><Users /><h3 className="card-main-title">Mis abuelos y padrinos</h3><Divider />{DATA.familyGroups.map((group, index) => <React.Fragment key={group.title}><FamilyGroup {...group} />{index < DATA.familyGroups.length - 1 && <div className="inner-separator" />}</React.Fragment>)}</article></Reveal>;
+}
+
+function MotherCard() {
+  return <Reveal delay={0.16}><article className="card family-card mother-card"><Heart /><h3 className="card-main-title">Mi madre</h3><Divider />{DATA.mother.map(name => <p key={name}>{name}</p>)}</article></Reveal>;
 }
 
 function EventCard({ icon: Icon, title, time, place, address, href }) {
@@ -108,7 +116,7 @@ export default function App() {
 
     <Quote>En compañía de las personas que amo, celebraré el comienzo de una nueva etapa.</Quote>
 
-    <section><h2>Mis abuelos y padrinos</h2><div className="family-list">{DATA.family.map((group, index) => <FamilyCard key={group.title} {...group} delay={index * 0.12} />)}</div></section>
+    <section><h2>Me acompañan</h2><div className="family-list"><FamilyAndGodparentsCard /><MotherCard /></div></section>
 
     <Quote>El tiempo avanza y cada día falta menos para vivir una noche inolvidable.</Quote>
 
