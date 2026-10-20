@@ -1,14 +1,129 @@
-import React,{useEffect,useRef,useState}from"react";
-import{AnimatePresence,motion}from"framer-motion";
-import{CalendarDays,ChevronLeft,ChevronRight,Church,Clock3,Crown,Gem,Heart,MapPin,PartyPopper,Pause,Play,Sparkles,Users,Volume2,VolumeX}from"lucide-react";
-const D={name:"JOSELINE",date:"2026-11-14T18:00:00-06:00",dateText:"SÁBADO 14 DE NOVIEMBRE DE 2026",mass:"6:00 p. m.",reception:"9:00 p. m.",church:"Iglesia María Estrella del Mar",churchAddress:"Carretera a Punta Sam, km 2.74, Puerto Juárez",churchMap:"https://maps.app.goo.gl/zhTks43cHKMvfPWcA",venue:"Local del Sindicato de Taxistas",venueAddress:"Av. Francisco I. Madero, SM 92, calle 71",venueMap:"https://maps.app.goo.gl/ZoGTEavibPR3RgHj6?g_st=aw",grandparents:["Leoncio Becerril Razo","Julia Martínez Marín"],godparents:["Carlos Manuel Martínez Marín","Orfelina May Chan"],parents:["Sebastián Antonio López Ordóñez","Fabiola Joseline Becerril Martínez"],photos:["/foto-1.jpg","/foto-2.jpg","/foto-3.jpg","/foto-4.jpg"],music:"/musica-xv.mp3"};
-const left=()=>{let x=Math.max(0,new Date(D.date)-Date.now());return{D:Math.floor(x/86400000),H:Math.floor(x/3600000)%24,M:Math.floor(x/60000)%60,S:Math.floor(x/1000)%60}};
-function Reveal({children}){return <motion.div initial={{opacity:0,y:35}} whileInView={{opacity:1,y:0}} viewport={{once:true}} transition={{duration:.8}}>{children}</motion.div>}
-function Bg(){return <div className="bg">{Array.from({length:150},(_,i)=><motion.i key={i} style={{left:`${(i*47)%100}%`,top:`${(i*71)%100}%`,width:i%11?3:8,height:i%11?3:8}} animate={{opacity:[.08,1,.08],scale:[.5,1.8,.5]}} transition={{duration:1.8+(i%6)*.4,repeat:Infinity,delay:(i%15)*.12}}/>)}</div>}
-const Divider=()=> <div className="divider"><span/><Gem size={17}/><span/></div>;
-function Quote({children}){return <Reveal><section className="quote"><Sparkles/><p>“{children}”</p></section></Reveal>}
-function Family({title,names}){return <article className="card"><Users/><h3>{title}</h3><Divider/>{names.map(x=><p key={x}>{x}</p>)}</article>}
-function Event({icon:Icon,title,time,place,address,href}){return <article className="card"><div className="icon"><Icon/></div><h3>{title}</h3><p className="time"><Clock3 size={16}/>{time}</p><b>{place}</b><p>{address}</p><a className="button" href={href} target="_blank"><MapPin size={17}/>Ver ubicación</a></article>}
-function Img({src,alt}){const[e,setE]=useState(false);return e?<div className="placeholder"><Sparkles/><p>Agrega {src.replace('/','')} en public</p></div>:<img src={src} alt={alt} onError={()=>setE(true)}/>}
-function Gallery(){const[n,setN]=useState(0),[pause,setPause]=useState(false);useEffect(()=>{if(pause)return;let t=setInterval(()=>setN(v=>(v+1)%4),4200);return()=>clearInterval(t)},[pause]);return <div className="gallery"><AnimatePresence mode="wait"><motion.div key={n} className="slide" initial={{opacity:0,x:30}} animate={{opacity:1,x:0}} exit={{opacity:0,x:-30}}><Img src={D.photos[n]} alt={`Foto ${n+1}`}/><strong>Recuerdos para siempre</strong></motion.div></AnimatePresence><button className="prev" onClick={()=>setN((n+3)%4)}><ChevronLeft/></button><button className="next" onClick={()=>setN((n+1)%4)}><ChevronRight/></button><button className="pause" onClick={()=>setPause(!pause)}>{pause?<Play/>:<Pause/>}</button></div>}
-export default function App(){const[open,setOpen]=useState(false),[t,setT]=useState(left()),[music,setMusic]=useState(false),audio=useRef();useEffect(()=>{let x=setInterval(()=>setT(left()),1000);return()=>clearInterval(x)},[]);async function enter(){setOpen(true);try{audio.current.volume=.28;await audio.current.play();setMusic(true)}catch{}}async function toggle(){if(audio.current.paused){try{await audio.current.play();setMusic(true)}catch{}}else{audio.current.pause();setMusic(false)}}const cal=`https://calendar.google.com/calendar/render?action=TEMPLATE&text=XV%20años%20de%20Joseline&dates=20261115T000000Z/20261115T060000Z`;return <main><Bg/><audio ref={audio} src={D.music} loop/>{!open?<section className="cover"><Gem/><small>TIENES UNA INVITACIÓN</small><h1>Mis XV años</h1><h2>{D.name}</h2><button className="envelope" onClick={enter}><div className="flap"/><div className="seal"><Crown/></div></button><motion.p animate={{opacity:[.4,1,.4]}} transition={{repeat:Infinity,duration:1.8}}>Presiona el sobre para abrirlo</motion.p></section>:<div className="content"><button className="music" onClick={toggle}>{music?<Volume2/>:<VolumeX/>}</button><section className="hero"><div className="portrait"><Img src="/foto-principal.jpg" alt="Joseline"/></div><Reveal><Crown/><small>MIS XV AÑOS</small><h1>{D.name}</h1><Divider/><p className="intro">Quince años no son solo una fecha; son sueños, recuerdos y una ilusión que existe desde niña. En esta etapa que hoy comienza, quiero compartir mi alegría con toda la gente que me rodea.</p><p>Te invito a acompañarme en este día tan especial para mí.</p><b className="date">{D.dateText}</b></Reveal></section><Quote>En compañía de las personas que amo, celebraré el comienzo de una nueva etapa.</Quote><section><h2>Me acompañan</h2><div className="grid three"><Family title="Mis abuelos" names={D.grandparents}/><Family title="Mis padrinos" names={D.godparents}/><Family title="Mis padres" names={D.parents}/></div></section><Quote>El tiempo avanza y cada día falta menos para vivir una noche inolvidable.</Quote><section><h2>Cuenta regresiva</h2><div className="count">{Object.entries(t).map(([k,v])=><div key={k}><b>{String(v).padStart(2,'0')}</b><small>{k}</small></div>)}</div><a className="outline" href={cal} target="_blank"><CalendarDays/>Agregar al calendario</a></section><Quote>Tu presencia hará que este día sea aún más inolvidable.</Quote><section><h2>Ceremonia y recepción</h2><div className="grid two"><Event icon={Church} title="Misa" time={D.mass} place={D.church} address={D.churchAddress} href={D.churchMap}/><Event icon={PartyPopper} title="Recepción" time={D.reception} place={D.venue} address={D.venueAddress} href={D.venueMap}/></div></section><Quote>Cada fotografía guarda un recuerdo, y cada recuerdo forma parte de mi historia.</Quote><section><h2>Galería de fotografías</h2><Gallery/></section><Quote>Deseo que seas parte de este momento que guardaré por siempre en mi corazón.</Quote><footer><Heart/><h2>{D.name}</h2><p>Tu presencia hará que este día sea aún más inolvidable.</p></footer></div>}</main>}
+import React, { useEffect, useRef, useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
+import { CalendarDays, ChevronLeft, ChevronRight, Church, Clock3, Crown, Gem, Heart, MapPin, PartyPopper, Pause, Play, Sparkles, Users, Volume2, VolumeX } from "lucide-react";
+
+const DATA = {
+  name: "JOSELINE",
+  date: "2026-11-14T18:00:00-06:00",
+  dateText: "SÁBADO 14 DE NOVIEMBRE DE 2026",
+  massTime: "6:00 p. m.",
+  receptionTime: "9:00 p. m.",
+  church: "Iglesia María Estrella del Mar",
+  churchAddress: "Carretera a Punta Sam, km 2.74, Puerto Juárez",
+  churchMap: "https://maps.app.goo.gl/zhTks43cHKMvfPWcA",
+  venue: "Local del Sindicato de Taxistas",
+  venueAddress: "Av. Francisco I. Madero, SM 92, calle 71",
+  venueMap: "https://maps.app.goo.gl/ZoGTEavibPR3RgHj6?g_st=aw",
+  family: [
+    { title: "Mis abuelos", names: ["Leoncio Becerril Razo", "Julia Martínez Marín"] },
+    { title: "Mi madre", names: ["Fabiola Joseline Becerril Martínez"] },
+    { title: "Mis padrinos de vestido", names: ["Carlos Manuel Martínez Marín", "Orfelina May Chan"] },
+    { title: "Mis padrinos de misa", names: ["Fermín Pérez Pinto", "Violeta Martínez Marín"] }
+  ],
+  photos: Array.from({ length: 8 }, (_, index) => `/foto-${index + 1}.jpg`),
+  music: "/musica-xv.mp3"
+};
+
+const remaining = () => {
+  const ms = Math.max(0, new Date(DATA.date).getTime() - Date.now());
+  return {
+    Días: Math.floor(ms / 86400000),
+    Horas: Math.floor(ms / 3600000) % 24,
+    Minutos: Math.floor(ms / 60000) % 60,
+    Segundos: Math.floor(ms / 1000) % 60
+  };
+};
+
+function Reveal({ children, delay = 0 }) {
+  return <motion.div initial={{ opacity: 0, y: 36 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.14 }} transition={{ duration: 0.8, delay, ease: [0.22, 1, 0.36, 1] }}>{children}</motion.div>;
+}
+
+function Background() {
+  return <div className="background">{Array.from({ length: 150 }, (_, index) => <motion.i key={index} style={{ left: `${(index * 47) % 100}%`, top: `${(index * 71) % 100}%`, width: index % 11 ? 3 : 8, height: index % 11 ? 3 : 8 }} animate={{ opacity: [0.08, 1, 0.08], scale: [0.5, 1.8, 0.5] }} transition={{ duration: 1.8 + (index % 6) * 0.4, repeat: Infinity, delay: (index % 15) * 0.12 }} />)}</div>;
+}
+
+function Divider() {
+  return <div className="divider"><span /><Gem size={17} /><span /></div>;
+}
+
+function Quote({ children }) {
+  return <Reveal><section className="quote"><Sparkles /><p>“{children}”</p></section></Reveal>;
+}
+
+function ImageWithFallback({ src, alt }) {
+  const [error, setError] = useState(false);
+  return error ? <div className="placeholder"><Sparkles /><p>Agrega {src.replace("/", "")} en la carpeta public</p></div> : <img src={src} alt={alt} onError={() => setError(true)} />;
+}
+
+function FamilyCard({ title, names, delay }) {
+  return <Reveal delay={delay}><article className="card family-card"><Users /><h3>{title}</h3><Divider />{names.map(name => <p key={name}>{name}</p>)}</article></Reveal>;
+}
+
+function EventCard({ icon: Icon, title, time, place, address, href }) {
+  return <article className="card event-card"><div className="icon"><Icon /></div><h3>{title}</h3><p className="time"><Clock3 size={16} />{time}</p><strong>{place}</strong><p>{address}</p><a className="button" href={href} target="_blank" rel="noreferrer"><MapPin size={17} />Ver ubicación</a></article>;
+}
+
+function Gallery() {
+  const [current, setCurrent] = useState(0);
+  const [paused, setPaused] = useState(false);
+  useEffect(() => {
+    if (paused) return;
+    const timer = setInterval(() => setCurrent(value => (value + 1) % DATA.photos.length), 4200);
+    return () => clearInterval(timer);
+  }, [paused]);
+
+  return <div className="gallery"><AnimatePresence mode="wait"><motion.div key={current} className="slide" initial={{ opacity: 0, x: 30, scale: 1.03 }} animate={{ opacity: 1, x: 0, scale: 1 }} exit={{ opacity: 0, x: -30, scale: 0.98 }}><ImageWithFallback src={DATA.photos[current]} alt={`Fotografía ${current + 1} de Joseline`} /><strong>Recuerdos para siempre</strong><small>{current + 1} de {DATA.photos.length}</small></motion.div></AnimatePresence><button className="gallery-button previous" onClick={() => setCurrent((current - 1 + DATA.photos.length) % DATA.photos.length)} aria-label="Fotografía anterior"><ChevronLeft /></button><button className="gallery-button next" onClick={() => setCurrent((current + 1) % DATA.photos.length)} aria-label="Fotografía siguiente"><ChevronRight /></button><button className="gallery-button pause" onClick={() => setPaused(!paused)} aria-label="Pausar o reproducir carrusel">{paused ? <Play /> : <Pause />}</button><div className="dots">{DATA.photos.map((_, index) => <button key={index} className={index === current ? "active" : ""} onClick={() => setCurrent(index)} aria-label={`Ver fotografía ${index + 1}`} />)}</div></div>;
+}
+
+export default function App() {
+  const [opened, setOpened] = useState(false);
+  const [time, setTime] = useState(remaining());
+  const [musicOn, setMusicOn] = useState(false);
+  const audio = useRef(null);
+
+  useEffect(() => {
+    const timer = setInterval(() => setTime(remaining()), 1000);
+    return () => clearInterval(timer);
+  }, []);
+
+  async function openInvitation() {
+    setOpened(true);
+    try { audio.current.volume = 0.28; await audio.current.play(); setMusicOn(true); } catch {}
+  }
+
+  async function toggleMusic() {
+    if (audio.current.paused) {
+      try { await audio.current.play(); setMusicOn(true); } catch {}
+    } else {
+      audio.current.pause();
+      setMusicOn(false);
+    }
+  }
+
+  const calendarUrl = "https://calendar.google.com/calendar/render?action=TEMPLATE&text=XV%20a%C3%B1os%20de%20Joseline&dates=20261115T000000Z/20261115T060000Z";
+
+  return <main><Background /><audio ref={audio} src={DATA.music} loop />{!opened ? <section className="cover"><Gem /><small>TIENES UNA INVITACIÓN</small><h1>Mis XV años</h1><h2>{DATA.name}</h2><button className="envelope" onClick={openInvitation} aria-label="Abrir invitación"><div className="flap" /><div className="seal"><Crown /></div></button><motion.p animate={{ opacity: [0.4, 1, 0.4] }} transition={{ repeat: Infinity, duration: 1.8 }}>Presiona el sobre para abrirlo</motion.p></section> : <div className="content"><button className="music" onClick={toggleMusic}>{musicOn ? <Volume2 /> : <VolumeX />}</button>
+
+    <section className="hero"><div className="portrait"><ImageWithFallback src="/foto-principal.jpg" alt="Fotografía principal de Joseline" /></div><Reveal><Crown /><small>MIS XV AÑOS</small><h1>{DATA.name}</h1><Divider /><p className="intro">Quince años no son solo una fecha; son sueños, recuerdos y una ilusión que existe desde niña. En esta etapa que hoy comienza, quiero compartir mi alegría con toda la gente que me rodea.</p><p>Te invito a acompañarme en este día tan especial para mí.</p><b className="date">{DATA.dateText}</b></Reveal></section>
+
+    <Quote>En compañía de las personas que amo, celebraré el comienzo de una nueva etapa.</Quote>
+
+    <section><h2>Me acompañan</h2><div className="family-list">{DATA.family.map((group, index) => <FamilyCard key={group.title} {...group} delay={index * 0.12} />)}</div></section>
+
+    <Quote>El tiempo avanza y cada día falta menos para vivir una noche inolvidable.</Quote>
+
+    <section><h2>Cuenta regresiva</h2><div className="countdown">{Object.entries(time).map(([label, value]) => <div key={label}><b>{String(value).padStart(2, "0")}</b><small>{label}</small></div>)}</div><a className="outline" href={calendarUrl} target="_blank" rel="noreferrer"><CalendarDays />Agregar al calendario</a></section>
+
+    <Quote>Tu presencia hará que este día sea aún más inolvidable.</Quote>
+
+    <section><h2>Ceremonia y recepción</h2><div className="event-grid"><EventCard icon={Church} title="Misa" time={DATA.massTime} place={DATA.church} address={DATA.churchAddress} href={DATA.churchMap} /><EventCard icon={PartyPopper} title="Recepción" time={DATA.receptionTime} place={DATA.venue} address={DATA.venueAddress} href={DATA.venueMap} /></div></section>
+
+    <Quote>Cada fotografía guarda un recuerdo, y cada recuerdo forma parte de mi historia.</Quote>
+
+    <section><h2>Galería de fotografías</h2><Gallery /></section>
+
+    <Quote>Deseo que seas parte de este momento que guardaré por siempre en mi corazón.</Quote>
+
+    <footer><Heart /><h2>{DATA.name}</h2><p>Tu presencia hará que este día sea aún más inolvidable.</p></footer>
+  </div>}</main>;
+}

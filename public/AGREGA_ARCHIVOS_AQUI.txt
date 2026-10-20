@@ -3,4 +3,8 @@ foto-1.jpg
 foto-2.jpg
 foto-3.jpg
 foto-4.jpg
+foto-5.jpg
+foto-6.jpg
+foto-7.jpg
+foto-8.jpg
 musica-xv.mp3

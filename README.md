@@ -1,7 +1,18 @@
 # Invitación de XV años de Joseline
 
-Versión sin confirmación por WhatsApp.
+Versión actualizada:
+- Todo el texto está en cursiva.
+- Orden de acompañantes: abuelos, madre, padrinos de vestido y padrinos de misa.
+- Carrusel preparado para 8 fotografías.
+- Sin confirmación por WhatsApp.
 
-Agrega a `public/`: `foto-principal.jpg`, `foto-1.jpg`, `foto-2.jpg`, `foto-3.jpg`, `foto-4.jpg` y `musica-xv.mp3`.
+Agrega dentro de `public/`:
+- `foto-principal.jpg`
+- `foto-1.jpg` hasta `foto-8.jpg`
+- `musica-xv.mp3`
 
-Ejecuta `npm install` y `npm run dev`. Para Vercel, sube todo a GitHub e importa el repositorio.
+Para probar:
+```bash
+npm install
+npm run dev
+```
