@@ -110,9 +110,9 @@ export default function App() {
 
   const calendarUrl = "https://calendar.google.com/calendar/render?action=TEMPLATE&text=XV%20a%C3%B1os%20de%20Joseline&dates=20261115T000000Z/20261115T060000Z";
 
-  return <main><Background /><audio ref={audio} src={DATA.music} loop />{!opened ? <section className="cover"><Gem /><small>TIENES UNA INVITACIÓN</small><h1>Mis XV años</h1><h2>{DATA.name}</h2><button className="envelope" onClick={openInvitation} aria-label="Abrir invitación"><div className="flap" /><div className="seal"><Crown /></div></button><motion.p animate={{ opacity: [0.4, 1, 0.4] }} transition={{ repeat: Infinity, duration: 1.8 }}>Presiona el sobre para abrirlo</motion.p></section> : <div className="content"><button className="music" onClick={toggleMusic}>{musicOn ? <Volume2 /> : <VolumeX />}</button>
+  return <main><Background /><audio ref={audio} src={DATA.music} loop />{!opened ? <section className="cover"><Gem /><small>TIENES UNA INVITACIÓN</small><h1>Mis XV años</h1><h2 className="joseline-name">{DATA.name}</h2><button className="envelope" onClick={openInvitation} aria-label="Abrir invitación"><div className="flap" /><div className="seal"><Crown /></div></button><motion.p animate={{ opacity: [0.4, 1, 0.4] }} transition={{ repeat: Infinity, duration: 1.8 }}>Presiona el sobre para abrirlo</motion.p></section> : <div className="content"><button className="music" onClick={toggleMusic}>{musicOn ? <Volume2 /> : <VolumeX />}</button>
 
-    <section className="hero"><div className="portrait"><ImageWithFallback src="/foto-principal.jpg" alt="Fotografía principal de Joseline" /></div><Reveal><Crown /><small>MIS XV AÑOS</small><h1>{DATA.name}</h1><Divider /><p className="intro">Quince años no son solo una fecha; son sueños, recuerdos y una ilusión que existe desde niña. En esta etapa que hoy comienza, quiero compartir mi alegría con toda la gente que me rodea.</p><p>Te invito a acompañarme en este día tan especial para mí.</p><b className="date">{DATA.dateText}</b></Reveal></section>
+    <section className="hero"><div className="portrait"><ImageWithFallback src="/foto-principal.jpg" alt="Fotografía principal de Joseline" /></div><Reveal><Crown /><small>MIS XV AÑOS</small><h1 className="joseline-name">{DATA.name}</h1><Divider /><p className="intro">Quince años no son solo una fecha; son sueños, recuerdos y una ilusión que existe desde niña. En esta etapa que hoy comienza, quiero compartir mi alegría con toda la gente que me rodea.</p><p>Te invito a acompañarme en este día tan especial para mí.</p><b className="date">{DATA.dateText}</b></Reveal></section>
 
     <Quote>En compañía de las personas que amo, celebraré el comienzo de una nueva etapa.</Quote>
 
@@ -132,6 +132,6 @@ export default function App() {
 
     <Quote>Deseo que seas parte de este momento que guardaré por siempre en mi corazón.</Quote>
 
-    <footer><Heart /><h2>{DATA.name}</h2><p>Tu presencia hará que este día sea aún más inolvidable.</p></footer>
+    <footer><Heart /><h2 className="joseline-name">{DATA.name}</h2><p>Tu presencia hará que este día sea aún más inolvidable.</p></footer>
   </div>}</main>;
 }

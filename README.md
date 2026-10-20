@@ -20,3 +20,5 @@ npm run dev
 Todos los usos del nombre se normalizaron como Joseline/JOSELINE y el diseño conserva la tipografía cursiva.
 
 La sección “Me acompañan” utiliza dos cuadros: uno conjunto para abuelos y padrinos, y otro independiente para la madre.
+
+El nombre independiente “Joseline” usa el mismo tamaño y estilo cursivo en portada, contenido y cierre.
