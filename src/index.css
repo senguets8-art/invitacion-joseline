@@ -4,3 +4,9 @@
 /* Nombre principal uniforme en toda la invitación */
 .joseline-name{font-family:'Cormorant Garamond',serif!important;font-style:italic!important;font-weight:500!important;font-size:4rem!important;line-height:1!important;letter-spacing:.04em;color:#f2dfa5!important;margin:1rem 0!important;text-transform:none!important}
 @media(max-width:760px){.joseline-name{font-size:3.25rem!important}}
+
+/* Cuatro cuadros independientes en Me acompañan */
+.family-list{grid-template-columns:1fr!important;max-width:760px!important}
+.companion-card{width:100%;min-height:230px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:2.4rem}
+.companion-card>svg{color:#f2dfa5}
+.companion-card .card-main-title{margin:.75rem 0 0;font-size:2.15rem!important}

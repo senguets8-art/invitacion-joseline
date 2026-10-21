@@ -22,3 +22,5 @@ Todos los usos del nombre se normalizaron como Joseline/JOSELINE y el diseño co
 La sección “Me acompañan” utiliza dos cuadros: uno conjunto para abuelos y padrinos, y otro independiente para la madre.
 
 El nombre independiente “Joseline” usa el mismo tamaño y estilo cursivo en portada, contenido y cierre.
+
+La sección “Me acompañan” ahora tiene cuatro cuadros independientes, en este orden: abuelos y padrinos, madre, padrinos de vestido y padrinos de misa.
